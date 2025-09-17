@@ -2,25 +2,24 @@ def count_words(text):
     words = text.split()
     return len(words)
 
-def count_characters(text):
-    """Return a list of 26 integers with counts for letters a..z in `text`.
-
-    Non-letter characters are ignored. The counts are case-insensitive.
-
-    Example: 'abA!' -> [2,1,0,0,...]
+def count_all_characters(text):
+    """
+    Counts each individual character in the provided text, including
+    letters, numbers, symbols, spaces, and any other character.
+    Returns a dictionary with character counts.
     """
     text = text.lower()
-    counts = [0] * 26
-    for ch in text:
-        if 'a' <= ch <= 'z':
-            counts[ord(ch) - ord('a')] += 1
+    counts = {}
+    for char in text:
+        counts[char] = counts.get(char, 0) + 1
     return counts
 
-
 def print_character_counts(text):
-    """Print counts for letters a..z in the format: "'a': <count>" for each letter."""
-    counts = count_characters(text)
-    for i, c in enumerate(counts):
-        letter = chr(ord('a') + i)
-        print(f"'{letter}': {c}")
+    """
+    Prints the count for each unique character in the provided text.
+    """
+    character_counts = count_all_characters(text)
+    # The sorted() function ensures consistent output order.
+    for char, count in sorted(character_counts.items()):
+        print(f"'{char}': {count}")
 

@@ -3,23 +3,35 @@ def count_words(text):
     return len(words)
 
 def count_all_characters(text):
-    """
-    Counts each individual character in the provided text, including
-    letters, numbers, symbols, spaces, and any other character.
-    Returns a dictionary with character counts.
-    """
     text = text.lower()
     counts = {}
     for char in text:
         counts[char] = counts.get(char, 0) + 1
     return counts
 
-def print_character_counts(text):
+# This helper function is correct and doesn't need to change.
+def sort_on(items):
+    return items["count"]
+
+# CORRECTED a new name to reflect that it now handles a list of dicts
+def print_sorted_character_report(char_list,book_text,book_path):
     """
-    Prints the count for each unique character in the provided text.
+    Sorts a list of dictionaries by the 'count' key (high to low)
+    and prints a report.
     """
-    character_counts = count_all_characters(text)
-    # The sorted() function ensures consistent output order.
-    for char, count in sorted(character_counts.items()):
-        print(f"'{char}': {count}")
+    # .sort() works because char_list is a list!
+    char_list.sort(reverse=True, key=sort_on)
+    
+    print("============ BOOKBOT ============")
+    print(f"Analyzing book found at {book_path}...")
+    print("----------- Word Count ----------")
+    num_words = count_words(book_text)
+    print(f"Found {num_words} total words")
+    print("--------- Character Count -------")
+
+    for item in char_list:
+        char = item["char"]
+        count = item["count"]
+        print(f"{char}: {count}")
+    print("============= END ===============")
 
